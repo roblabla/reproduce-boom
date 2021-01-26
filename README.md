@@ -1,12 +1,27 @@
 # Fun crash reproducer
 
-This repository reproduces a crash in LLVM.
+This repository reproduces a crash when linking with rust-lld with Thin LTO and
++crt-static.
 
 To reproduce:
 
 - Get a windows machine
 - Install rustup
 - Run `cargo run --release`
+
+Error:
+
+```
+Access violation - code c0000005 (first chance)
+First chance exceptions are reported before any exception handling.
+This exception may be expected and handled.
+```
+
+ASM:
+
+```
+00007ff7`812161dc f0480fb133           lock cmpxchg qword ptr [rbx], rsi ds:00007ff7`81210000=0000000100785a4d
+```
 
 Backtrace:
 
