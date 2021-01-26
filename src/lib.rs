@@ -1,13 +1,12 @@
 use std::future::Future;
 use once_cell::sync::Lazy;
-use concurrent_queue::ConcurrentQueue;
 
-static CHANNEL: Lazy<ConcurrentQueue<()>> =
-    Lazy::new(ConcurrentQueue::unbounded);
+static CHANNEL: Lazy<()> =
+    Lazy::new(|| ());
 
 pub fn run() -> impl Future<Output = ()> {
     async move {
-        let _ = CHANNEL.pop();
+        let _ = *CHANNEL;
         println!("Did not crash.")
     }
 }
