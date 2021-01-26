@@ -2,7 +2,8 @@
 
 This repository reproduces a crash in LLVM.
 
-To reproduce, on a windows machine:
+To reproduce:
 
+- Get a windows machine
 - Install rustup
 - Run `cargo run --release`
