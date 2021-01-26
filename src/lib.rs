@@ -1,12 +1,14 @@
-use std::future::Future;
-use once_cell::sync::Lazy;
+#![feature(once_cell)]
 
-static CHANNEL: Lazy<()> =
-    Lazy::new(|| ());
+use std::future::Future;
+use std::lazy::SyncLazy;
+
+static CHANNEL: SyncLazy<()> =
+    SyncLazy::new(|| ());
 
 pub fn run() -> impl Future<Output = ()> {
     async move {
         let _ = *CHANNEL;
-        println!("Did not crash.")
+        println!("Did not crash.");
     }
 }
