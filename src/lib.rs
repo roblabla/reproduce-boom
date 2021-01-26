@@ -1,11 +1,9 @@
-use std::future::Future;
 use once_cell::sync::Lazy;
 
-static CHANNEL: Lazy<()> =
-    Lazy::new(|| ());
+static CHANNEL: Lazy<()> = Lazy::new(|| ());
 
-pub fn run() -> impl Future<Output = ()> {
-    async move {
+pub fn run() -> impl FnOnce() {
+    || {
         let _ = *CHANNEL;
         println!("Did not crash.")
     }
