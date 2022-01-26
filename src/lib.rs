@@ -1,10 +1,14 @@
-use once_cell::sync::Lazy;
+#![no_std]
+use core::sync::atomic::{AtomicPtr, Ordering};
 
-static CHANNEL: Lazy<()> = Lazy::new(|| ());
+#[inline(always)]
+pub fn memrchr() {
+    fn detect() {}
 
-pub fn run() -> impl FnOnce() {
-    || {
-        let _ = *CHANNEL;
-        println!("Did not crash.")
+    static FN: AtomicPtr<()> = AtomicPtr::new(detect as *mut ());
+
+    unsafe {
+        let fun = FN.load(Ordering::SeqCst);
+        core::mem::transmute::<*mut (), fn()>(fun)()
     }
 }
